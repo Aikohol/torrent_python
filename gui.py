@@ -1,5 +1,6 @@
 import tkinter as tk
 import tkinter.filedialog
+from tkinter import ttk
 from utils.torrent import torrent_start
 
 path = "/home/aikoho/Documents/resources/torrent/MX-18.2_x64.torrent"
@@ -11,6 +12,8 @@ class Application(tk.Frame):
         self.pack()
         self.create_downlaod_button()
         self.create_download_input()
+        self.create_input_download()
+        self.create_progress_bar()
 
     def create_downlaod_button(self):
         self.download_button = tk.Button(self)
@@ -27,14 +30,22 @@ class Application(tk.Frame):
         self.download_button["text"] = "Browse"
         self.download_button["command"] = self.askopenfile
         self.download_button.pack(side="top")
-        if
+
+    def create_progress_bar(self):
+        self.progress_bar = ttk.Progressbar(self, orient='horizontal', length=400, mode='determinate')
+        self.progress_bar.pack()
+        self.progress_bar['maximum'] = 100
+        self.progress_bar['value'] = 30
+
+    def create_input_download(self):
+        self.download_input = tk.Entry(self, textvariable = '')
 
     def download_button_action(self):
         torrent_start(path)
 
     def askopenfile(self):
         file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file')
-        path_file = file.name
+        pathfile = file.name
 
 
 root = tk.Tk()
