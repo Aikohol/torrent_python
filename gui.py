@@ -32,8 +32,7 @@ class Application(tk.Frame):
         torrent_start(self.filepath)
 
     def askopenfile(self):
-        file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file')
-        logging.warning(file)
+        file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file', filetypes = (("torrent files",".torrent"),("all files",".*")))
         self.filepath = file.name
 
 
