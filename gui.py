@@ -1,4 +1,5 @@
 import tkinter as tk
+import tkinter.filedialog
 from utils.torrent import torrent_start
 
 path = "/home/aikoho/Documents/resources/torrent/MX-18.2_x64.torrent"
@@ -22,13 +23,19 @@ class Application(tk.Frame):
         self.quit.pack(side="bottom")
 
     def create_download_input(self):
-        pass
+        self.download_button = tk.Button(self)
+        self.download_button["text"] = "Browse"
+        self.download_button["command"] = self.askopenfile
+        self.download_button.pack(side="top")
+        if
 
     def download_button_action(self):
         torrent_start(path)
 
     def askopenfile(self):
-        pass
+        file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file')
+        path_file = file.name
+
 
 root = tk.Tk()
 app = Application(master=root)
