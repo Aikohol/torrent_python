@@ -2,12 +2,12 @@ import tkinter as tk
 import tkinter.filedialog
 from tkinter import ttk
 from utils.torrent import torrent_start
-
-path = "/home/aikoho/Documents/resources/torrent/MX-18.2_x64.torrent"
+import logging
 
 class Application(tk.Frame):
     def __init__(self, master=None):
         super().__init__(master)
+        self.filepath = ""
         self.master = master
         self.pack()
         self.create_downlaod_button()
@@ -17,7 +17,7 @@ class Application(tk.Frame):
 
     def create_downlaod_button(self):
         self.download_button = tk.Button(self)
-        self.download_button["text"] = "Hello World\n(click me)"
+        self.download_button["text"] = "Start Download"
         self.download_button["command"] = self.download_button_action
         self.download_button.pack(side="top")
 
@@ -41,7 +41,7 @@ class Application(tk.Frame):
         self.download_input = tk.Entry(self, textvariable = '')
 
     def download_button_action(self):
-        torrent_start(path)
+        torrent_start(self.filepath)
 
     def askopenfile(self):
         file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file')
