@@ -45,7 +45,7 @@ class Application(tk.Frame):
 
     def askopenfile(self):
         file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file')
-        pathfile = file.name
+        pathfile git = file.name
 
 
 root = tk.Tk()
