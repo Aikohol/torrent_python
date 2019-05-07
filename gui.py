@@ -40,7 +40,7 @@ class Application(tk.Frame):
 
 #thread start
 
-thread = Application()
+thread = threading.Thread(target='Application')
 thread.start()
 print("thread strat")
 
