@@ -49,5 +49,7 @@ class Application(tk.Frame):
 
 
 root = tk.Tk()
+root.filename = filedialog.askopenfilename(initialdir = "/", title = "Select file",filetypes = (("jpeg files","*.jpg"),("all files","*.*")))
+print (root.filename)
 app = Application(master=root)
 app.mainloop()
