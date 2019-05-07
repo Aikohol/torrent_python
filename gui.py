@@ -40,8 +40,19 @@ class Application(tk.Frame):
 
 #thread start
 
-thread = threading.Thread(target='Application')
-thread.start()
+i = threading.Thread(target='__init__')
+c = threading.Thread(target='create_download_button')
+p = threading.Thread(target='create_download_input')
+a = threading.Thread(target='download_button_action')
+f = threading.Thread(target='askopenfile')
+
+i.start()
+c.start()
+p.start()
+a.start()
+f.start()
+
+
 print("thread strat")
 
 root = tk.Tk()
