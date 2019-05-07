@@ -2,6 +2,8 @@ import tkinter as tk
 import tkinter.filedialog
 from utils.torrent import torrent_start
 import logging
+from threading import Thread
+import time
 
 class Application(tk.Frame):
     def __init__(self, master=None):
@@ -36,6 +38,11 @@ class Application(tk.Frame):
         logging.warning(file)
         self.filepath = file.name
 
+#thread start
+
+thread = Application()
+thread.start()
+print("thread strat")
 
 root = tk.Tk()
 app = Application(master=root)
