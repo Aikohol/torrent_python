@@ -40,7 +40,7 @@ class Application(tk.Frame):
 
 #thread start
 
-i = threading.Thread(target='__init__')
+i = threading.Thread(target='__init__'  )
 c = threading.Thread(target='create_download_button')
 p = threading.Thread(target='create_download_input')
 a = threading.Thread(target='download_button_action')
