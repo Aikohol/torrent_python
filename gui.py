@@ -16,6 +16,7 @@ class Application(tk.Frame):
         self.create_downlaod_button()
         self.create_download_input()
         self.create_progress_bar()
+        asyncio.run(self.run_progressBar())
 
     def create_downlaod_button(self):
         self.download_button = tk.Button(self)
@@ -34,7 +35,6 @@ class Application(tk.Frame):
 
     def download_button_action(self):
         self.torrent.torrent_start(self.filepath)
-        asyncio.run(self.run_progressBar())
         self.torrent.torrent_info()
 
 
@@ -50,7 +50,6 @@ class Application(tk.Frame):
         self.progress_bar.pack()
 
     def run_progressBar(self):
-        print('ya')
         if self.torrent.info['progress'] > 0:
             while self.torrent.info['progress'] < 100:
                 self.progress_bar["maximum"] = 100
