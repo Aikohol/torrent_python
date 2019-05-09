@@ -9,7 +9,6 @@ class Torrent(object):
         self.info = {'progress': 0}
 
     def torrent_start(self, filepath):
-
         info = lt.torrent_info(filepath)
         self.h = self.ses.add_torrent({'ti': info, 'save_path': '.'})
         s = self.h.status()
