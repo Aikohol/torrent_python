@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.filedialog
 from utils.torrent import Torrent
-import asyncio
+# import asyncio
 import logging
 
 class Application(tk.Frame):
@@ -11,18 +11,22 @@ class Application(tk.Frame):
         self.filepath = ""
         self.master = master
         self.pack()
-        self.torrents = {}
-        self.torrent = Torrent()
+        self.torrents = []
         self.create_downlaod_button()
         self.create_download_input()
         self.create_progress_bar()
-        asyncio.run(self.run_progressBar())
+        self.create_quit_button()
+        # asyncio.run(self.run_progressBar())
 
     def create_downlaod_button(self):
         self.download_button = tk.Button(self)
         self.download_button["text"] = "Start Download"
         self.download_button["command"] = self.download_button_action
         self.download_button.pack(side="top")
+
+    def create_quit_button(self):
+        for torrent in self.torrents:
+            torrent._stop()
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
         self.quit.pack(side="bottom")
@@ -34,9 +38,10 @@ class Application(tk.Frame):
         self.download_button.pack(side="top")
 
     def download_button_action(self):
-        self.torrent.torrent_start(self.filepath)
-        self.torrent.torrent_info()
-
+        logging.warning(self.filepath)
+        torrent = Torrent(self.filepath)
+        self.torrents.append(torrent)
+        torrent.start()
 
     def askopenfile(self):
         file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file', filetypes = (("torrent files",".torrent"),("all files",".*")))
