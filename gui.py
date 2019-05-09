@@ -2,7 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 import tkinter.filedialog
 from utils.torrent import Torrent
-# import asyncio
+import logging
+import libtorrent as lt
+import time
+import sys
+from threading import Thread
 import logging
 
 class Application(tk.Frame):
@@ -12,11 +16,16 @@ class Application(tk.Frame):
         self.master = master
         self.pack()
         self.torrents = []
+        self.labels= []
         self.create_downlaod_button()
         self.create_download_input()
-        self.create_progress_bar()
         self.create_quit_button()
-        # asyncio.run(self.run_progressBar())
+
+    def create_label_info(self):
+        logging.warning("passing through")
+        label = tk.Label(self)
+        self.labels.append(label)
+        return label
 
     def create_downlaod_button(self):
         self.download_button = tk.Button(self)
@@ -26,10 +35,13 @@ class Application(tk.Frame):
 
     def create_quit_button(self):
         for torrent in self.torrents:
-            torrent._stop()
+            for label in self.labels:
+                label.pack_forget()
+                torrent.state = False
         self.quit = tk.Button(self, text="QUIT", fg="red",
                               command=self.master.destroy)
         self.quit.pack(side="bottom")
+
 
     def create_download_input(self):
         self.download_button = tk.Button(self)
@@ -38,8 +50,9 @@ class Application(tk.Frame):
         self.download_button.pack(side="top")
 
     def download_button_action(self):
-        logging.warning(self.filepath)
-        torrent = Torrent(self.filepath)
+        label = self.create_label_info()
+        self.labels.append(label)
+        torrent = Torrent(self.filepath, label)
         self.torrents.append(torrent)
         torrent.start()
 
@@ -55,14 +68,13 @@ class Application(tk.Frame):
         self.progress_bar.pack()
 
     def run_progressBar(self):
-        if self.torrent.info['progress'] > 0:
-            while self.torrent.info['progress'] < 100:
-                self.progress_bar["maximum"] = 100
-                self.progress_bar["value"] = self.torrent.info['progress']
-                self.progress_bar.update()
-                print(self.progress_bar['value'])
-        yield
-
+        for torrent in self.torrents:
+            if torrent.info['progress'] > 0:
+                while torrent.info['progress'] < 100:
+                    self.progress_bar["maximum"] = 100
+                    self.progress_bar["value"] = torrent.info['progress']
+                    self.progress_bar.update()
+                    print(self.progress_bar['value'])
 
 root = tk.Tk()
 app = Application(master=root)
