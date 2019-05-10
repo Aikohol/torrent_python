@@ -17,8 +17,6 @@ class Torrent(Thread):
         self.progress = 0
         self.text = ""
         self.state = True
-        logging.warning("label")
-        logging.warning(label)
         self.label = label
         self.bar = bar
 
@@ -31,7 +29,7 @@ class Torrent(Thread):
         s = self.h.status()
         self.label.grid(row=active_count() - 1, column=2)
         self.bar.grid(row=active_count() - 1, column=3)
-        
+
         while (not s.is_seeding and self.state):
             s = self.h.status()
 

@@ -53,17 +53,19 @@ class Application(tk.Frame):
         self.download_button.grid(row=1, column=1)
 
     def download_button_action(self):
-        label = self.create_label_info()
-        self.labels.append(label)
-        bar = self.create_progress_bar()
-        self.bars.append(bar)
-        torrent = Torrent(self.filepath, bar, label, self.directorypath)
-        self.torrents.append(torrent)
-        torrent.start()
+        if self.filepath != "":
+            label = self.create_label_info()
+            self.labels.append(label)
+            bar = self.create_progress_bar()
+            self.bars.append(bar)
+            torrent = Torrent(self.filepath, bar, label, self.directorypath)
+            self.torrents.append(torrent)
+            torrent.start()
 
     def askopenfile(self):
         file = tkinter.filedialog.askopenfile(initialdir = "./", title='Select file', filetypes = (("torrent files",".torrent"),("all files",".*")))
-        self.filepath = file.name
+        if file:
+            self.filepath = file.name
 
     def create_save_button(self):
         self.save_button = tk.Button(self)
